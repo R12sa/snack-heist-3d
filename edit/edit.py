@@ -39,7 +39,7 @@ for m in meta:
                f"fontsize='{sz}*(1+0.28*max(0\\,1-(t-{a:.3f})/0.1))':x=(w-text_w)/2:y={y}-text_h/2:enable='between(t\\,{a:.3f}\\,{b:.3f})'")
     if n == 'end': vf += f",fade=t=out:st={L[n]-.5:.3f}:d=0.5"
     run(["ffmpeg", "-v", "warning", "-y", "-framerate", str(FPS), "-start_number", "1", "-i", FR + n + "/f_%04d.jpg", "-vf", vf, "-frames:v", str(N),
-         "-c:v", "libx264", "-crf", "17", "-preset", "veryfast", "-pix_fmt", "yuv420p", "-r", str(FPS), f"s_{n}.tmp.mp4"])
+         "-c:v", "libx264", "-crf", "12", "-preset", "ultrafast", "-pix_fmt", "yuv420p", "-r", str(FPS), f"s_{n}.tmp.mp4"])
     os.replace(f"s_{n}.tmp.mp4", f"s_{n}.mp4"); segs.append(f"s_{n}.mp4")
 open("l.txt", "w").write("".join(f"file '{x}'\n" for x in segs))
 run(["ffmpeg", "-v", "warning", "-y", "-f", "concat", "-safe", "0", "-i", "l.txt", "-c", "copy", "j.mp4"])
