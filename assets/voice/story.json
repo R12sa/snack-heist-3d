@@ -1,0 +1,209 @@
+[
+ {
+  "i": 0,
+  "text": "Me and my dad have a secret.",
+  "start": 0,
+  "dur": 1.787,
+  "gap": 0.405,
+  "shot": "hook",
+  "dad": false
+ },
+ {
+  "i": 1,
+  "text": "So it's 3 AM. And I'm starving.",
+  "start": 2.192,
+  "dur": 2.026,
+  "gap": 0.27,
+  "shot": "bed",
+  "dad": false
+ },
+ {
+  "i": 2,
+  "text": "Mom hid the cookie jar in the kitchen. Like I wouldn't find it.",
+  "start": 4.489,
+  "dur": 3.19,
+  "gap": 0.315,
+  "shot": "jar",
+  "dad": false
+ },
+ {
+  "i": 3,
+  "text": "So I roll out of bed",
+  "start": 7.994,
+  "dur": 1.448,
+  "gap": 0.135,
+  "shot": "out",
+  "dad": false
+ },
+ {
+  "i": 4,
+  "text": "and sneak past my parents' room.",
+  "start": 9.577,
+  "dur": 1.828,
+  "gap": 0.225,
+  "shot": "hall",
+  "dad": false
+ },
+ {
+  "i": 5,
+  "text": "Dad's snoring like a lawnmower.",
+  "start": 11.63,
+  "dur": 1.721,
+  "gap": 0.36000000000000004,
+  "shot": "parents",
+  "dad": false
+ },
+ {
+  "i": 6,
+  "text": "Down the stairs. Skip the creaky one.",
+  "start": 13.711,
+  "dur": 1.933,
+  "gap": 0.36000000000000004,
+  "shot": "stairs",
+  "dad": false
+ },
+ {
+  "i": 7,
+  "text": "And then Whiskers.",
+  "start": 16.004,
+  "dur": 1.292,
+  "gap": 0.18000000000000002,
+  "shot": "cat",
+  "dad": false
+ },
+ {
+  "i": 8,
+  "text": "Just sitting there. Staring at me.",
+  "start": 17.476,
+  "dur": 1.752,
+  "gap": 0.27,
+  "shot": "catclose",
+  "dad": false
+ },
+ {
+  "i": 9,
+  "text": "Whiskers. Don't you dare.",
+  "start": 19.497,
+  "dur": 1.489,
+  "gap": 0.9900000000000001,
+  "shot": "plead",
+  "dad": false
+ },
+ {
+  "i": 10,
+  "text": "Upstairs, Dad's light clicks on.",
+  "start": 21.976,
+  "dur": 1.852,
+  "gap": 0.315,
+  "shot": "dadwake",
+  "dad": false
+ },
+ {
+  "i": 11,
+  "text": "So I sprint to the kitchen, grab the jar",
+  "start": 24.143,
+  "dur": 2.121,
+  "gap": 0.09000000000000001,
+  "shot": "grab",
+  "dad": false
+ },
+ {
+  "i": 12,
+  "text": "and hide behind the island.",
+  "start": 26.355,
+  "dur": 1.538,
+  "gap": 0.315,
+  "shot": "hide",
+  "dad": false
+ },
+ {
+  "i": 13,
+  "text": "Dad walks in. Flashlight on. Looking everywhere.",
+  "start": 28.208,
+  "dur": 2.544,
+  "gap": 0.315,
+  "shot": "dadin",
+  "dad": false
+ },
+ {
+  "i": 14,
+  "text": "Then he walks right past me to my birthday cake.",
+  "start": 31.067,
+  "dur": 2.656,
+  "gap": 0.225,
+  "shot": "cake",
+  "dad": false
+ },
+ {
+  "i": 15,
+  "text": "And just starts eating it.",
+  "start": 33.948,
+  "dur": 1.353,
+  "gap": 0.405,
+  "shot": "eat",
+  "dad": false
+ },
+ {
+  "i": 16,
+  "text": "Then he turns around. And sees me.",
+  "start": 35.705,
+  "dur": 1.838,
+  "gap": 0.315,
+  "shot": "turn",
+  "dad": false
+ },
+ {
+  "i": 17,
+  "text": "We just stare at each other.",
+  "start": 37.858,
+  "dur": 1.468,
+  "gap": 0.45,
+  "shot": "stare",
+  "dad": false
+ },
+ {
+  "i": 18,
+  "text": "You didn't see anything.",
+  "start": 39.776,
+  "dur": 1.412,
+  "gap": 0.315,
+  "shot": "dadsays",
+  "dad": true
+ },
+ {
+  "i": 19,
+  "text": "Deal.",
+  "start": 41.503,
+  "dur": 0.646,
+  "gap": 0.45,
+  "shot": "deal",
+  "dad": false
+ },
+ {
+  "i": 20,
+  "text": "So now we split snacks every night.",
+  "start": 42.599,
+  "dur": 1.952,
+  "gap": 0.27,
+  "shot": "split",
+  "dad": false
+ },
+ {
+  "i": 21,
+  "text": "Until last night when Mom came downstairs.",
+  "start": 44.821,
+  "dur": 2.649,
+  "gap": 0.45,
+  "shot": "mom",
+  "dad": false
+ },
+ {
+  "i": 22,
+  "text": "Be honest. Would you snitch on your dad?",
+  "start": 47.92,
+  "dur": 1.881,
+  "gap": 1.08,
+  "shot": "end",
+  "dad": false
+ }
+]

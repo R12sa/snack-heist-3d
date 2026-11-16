@@ -1,0 +1,6 @@
+frames/
+work/
+*.mp4
+__pycache__/
+assets/voice/*.onnx
+assets/voice/*.bin

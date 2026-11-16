@@ -1,0 +1,68 @@
+name: Render Snack Heist story
+
+on:
+  workflow_dispatch:
+    inputs:
+      computers:
+        description: "How many computers render at once (more = faster, max 20 on free plan)"
+        default: "20"
+      quality:
+        description: "fast (preview) or full"
+        default: "full"
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      chunks: ${{ steps.p.outputs.chunks }}
+    steps:
+      - id: p
+        run: echo "chunks=$(python3 -c "import json;print(json.dumps(list(range(int('${{ inputs.computers }}')))))")" >> "$GITHUB_OUTPUT"
+
+  render:
+    needs: plan
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        chunk: ${{ fromJson(needs.plan.outputs.chunks) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: requirements-render.txt
+      - name: Install Blender (bpy)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq libxrender1 libxxf86vm1 libxfixes3 libxi6 libxkbcommon0 libsm6 libgl1 libegl1 > /dev/null
+          pip install -q -r requirements-render.txt
+      - name: Render my part of the video
+        run: |
+          if [ "${{ inputs.quality }}" = "fast" ]; then Q="--spp 4 --width 640 --height 360"; else Q="--spp 8"; fi
+          python render/render.py -- --chunk ${{ matrix.chunk }} --of ${{ inputs.computers }} --out frames $Q
+      - uses: actions/upload-artifact@v4
+        with:
+          name: frames-${{ matrix.chunk }}
+          path: frames
+          retention-days: 2
+
+  edit:
+    needs: render
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: frames-*
+          path: frames
+          merge-multiple: true
+      - name: Make the final video
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg > /dev/null
+          python3 edit/edit.py frames SnackHeist_Story.mp4
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SnackHeist_Story
+          path: SnackHeist_Story.mp4
