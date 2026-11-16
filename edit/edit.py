@@ -39,7 +39,7 @@ for m in meta:
                f"fontsize='{sz}*(1+0.28*max(0\\,1-(t-{a:.3f})/0.1))':x=(w-text_w)/2:y={y}-text_h/2:enable='between(t\\,{a:.3f}\\,{b:.3f})'")
     if n == 'end': vf += f",fade=t=out:st={L[n]-.5:.3f}:d=0.5"
     run(["ffmpeg", "-v", "warning", "-y", "-framerate", str(FPS), "-start_number", "1", "-i", FR + n + "/f_%04d.jpg", "-vf", vf, "-frames:v", str(N),
-         "-c:v", "libx264", "-crf", "17", "-preset", "medium", "-pix_fmt", "yuv420p", "-r", str(FPS), f"s_{n}.tmp.mp4"])
+         "-c:v", "libx264", "-crf", "17", "-preset", "veryfast", "-pix_fmt", "yuv420p", "-r", str(FPS), f"s_{n}.tmp.mp4"])
     os.replace(f"s_{n}.tmp.mp4", f"s_{n}.mp4"); segs.append(f"s_{n}.mp4")
 open("l.txt", "w").write("".join(f"file '{x}'\n" for x in segs))
 run(["ffmpeg", "-v", "warning", "-y", "-f", "concat", "-safe", "0", "-i", "l.txt", "-c", "copy", "j.mp4"])
@@ -87,7 +87,7 @@ fc += f"{labs}amix=inputs={n}:normalize=0,atrim=0:{END},loudnorm=I=-14:TP=-1.5[a
 open("af.txt", "w").write(fc)
 run(["ffmpeg", "-v", "warning", "-y", *ins, "-filter_complex_script", "af.txt", "-map", "[a]", "-c:a", "pcm_s16le", "a.wav"])
 run(["ffmpeg", "-v", "warning", "-y", "-i", "j.mp4", "-i", "a.wav", "-filter_script:v", "vf.txt", "-map", "0:v", "-map", "1:a",
-     "-c:v", "libx264", "-crf", "18", "-preset", "medium", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-shortest", "t.mp4"])
+     "-c:v", "libx264", "-crf", "18", "-preset", "veryfast", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-shortest", "t.mp4"])
 shutil.move("t.mp4", OUT)
 run(["ffmpeg", "-v", "warning", "-y", "-i", OUT, "-vf", "fps=1,scale=320:-2,tile=8x7", "-frames:v", "1", "chk.jpg"])
 print(round(END, 1), len(segs), len(words))

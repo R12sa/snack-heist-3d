@@ -8,8 +8,8 @@ import shots
 argv = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
 ap = argparse.ArgumentParser()
 ap.add_argument('--chunk', type=int, default=0); ap.add_argument('--of', type=int, default=1)
-ap.add_argument('--out', default=os.path.join(ROOT, 'frames')); ap.add_argument('--spp', type=int, default=8)
-ap.add_argument('--width', type=int, default=960); ap.add_argument('--height', type=int, default=540)
+ap.add_argument('--out', default=os.path.join(ROOT, 'frames')); ap.add_argument('--spp', type=int, default=4)
+ap.add_argument('--width', type=int, default=800); ap.add_argument('--height', type=int, default=450)
 ap.add_argument('--shots', default='all')
 a = ap.parse_args(argv)
 meta = json.load(open(os.path.join(ROOT, 'assets', 'voice', 'story.json')))
@@ -20,7 +20,12 @@ for m in meta:
     if a.shots != 'all' and n not in a.shots.split(','): continue
     L = m['dur'] + m['gap'] + EXTRA.get(n, 0)
     jobs += [(n, f, L) for f in range(1, int(round(L * FPS)) + 1)]
-per = -(-len(jobs) // a.of); mine = jobs[a.chunk * per:(a.chunk + 1) * per]
+# split by how slow each shot's frames are (measured), so every computer finishes at the same time
+cost = json.load(open(os.path.join(HERE, 'frame_cost.json')))
+w = [cost.get(n, 16.0) for n, f, L in jobs]; tot = sum(w); acc = 0; mine = []
+for (job, wi) in zip(jobs, w):
+    if int(acc / tot * a.of) == a.chunk: mine.append(job)
+    acc += wi
 print(f'chunk {a.chunk}/{a.of}: {len(mine)} of {len(jobs)} frames', flush=True)
 G = build(res=(a.width, a.height), spp=a.spp); S = G['S']; cur = {}
 def handler(scene, *x):

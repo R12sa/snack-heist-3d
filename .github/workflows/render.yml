@@ -40,7 +40,7 @@ jobs:
           pip install -q -r requirements-render.txt
       - name: Render my part of the video
         run: |
-          if [ "${{ inputs.quality }}" = "fast" ]; then Q="--spp 4 --width 640 --height 360"; else Q="--spp 8"; fi
+          if [ "${{ inputs.quality }}" = "fast" ]; then Q="--spp 2 --width 640 --height 360"; else Q=""; fi
           python render/render.py -- --chunk ${{ matrix.chunk }} --of ${{ inputs.computers }} --out frames $Q
       - uses: actions/upload-artifact@v4
         with:

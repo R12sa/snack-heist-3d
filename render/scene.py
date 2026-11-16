@@ -39,9 +39,13 @@ def build(res=(960, 540), spp=8):
     sun = bpy.data.objects.new('moon', bpy.data.lights.new('moon', 'SUN')); sun.data.energy = 1.2; sun.data.color = srgb(0x9fb4ff); sun.data.angle = .05
     sun.rotation_euler = (math.radians(55), 0, math.radians(200)); link(sun)
     bg = S.world.node_tree.nodes['Background']; bg.inputs[0].default_value = (.01, .015, .04, 1); bg.inputs[1].default_value = 1
+    # bake bevel modifiers into plain meshes so nothing is re-computed every frame
+    dg = bpy.context.evaluated_depsgraph_get()
+    for o in [o for o in bpy.data.objects if o.type == 'MESH' and o.modifiers]:
+        me = bpy.data.meshes.new_from_object(o.evaluated_get(dg)); o.modifiers.clear(); o.data = me
     S.render.engine = 'CYCLES'; c = S.cycles
-    c.samples = spp; c.use_denoising = True; c.denoiser = 'OPENIMAGEDENOISE'; c.use_adaptive_sampling = True; c.adaptive_threshold = .05
-    c.max_bounces = 4; c.diffuse_bounces = 2; c.glossy_bounces = 1; c.transmission_bounces = 3; c.transparent_max_bounces = 6
+    c.samples = spp; c.use_denoising = True; c.denoiser = 'OPENIMAGEDENOISE'; c.use_adaptive_sampling = True; c.adaptive_threshold = .1
+    c.max_bounces = 3; c.diffuse_bounces = 1; c.glossy_bounces = 1; c.transmission_bounces = 3; c.transparent_max_bounces = 6
     c.caustics_reflective = False; c.caustics_refractive = False
     S.render.use_persistent_data = True
     S.render.resolution_x, S.render.resolution_y = res; S.render.resolution_percentage = 100
