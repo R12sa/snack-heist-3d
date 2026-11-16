@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       computers:
-        description: "How many computers render at once (more = faster, max 20 on free plan)"
-        default: "20"
+        description: "How many pieces to split the video into (GitHub runs 20 at a time; extra pieces balance slow computers)"
+        default: "40"
       quality:
         description: "fast (preview) or full"
         default: "full"
@@ -24,6 +24,7 @@ jobs:
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
+      max-parallel: 20
       matrix:
         chunk: ${{ fromJson(needs.plan.outputs.chunks) }}
     steps:
