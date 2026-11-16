@@ -5,6 +5,9 @@ from lib import *
 ROOT = os.path.abspath(os.path.join(HERE, '..'))
 
 def load_house():
+    baked = os.path.join(ROOT, 'assets', 'house.blend')
+    if os.path.exists(baked) and 'bake_house' not in sys.argv[0]:
+        bpy.ops.wm.open_mainfile(filepath=baked); return
     bpy.ops.wm.read_factory_settings(use_empty=True)
     bpy.ops.import_scene.gltf(filepath=os.path.join(ROOT, 'assets', 'house.gltf'))
     for m in bpy.data.materials:
