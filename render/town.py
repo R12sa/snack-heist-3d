@@ -135,16 +135,17 @@ def build_town(seed=7, theme='suburb', time='day', size=3, specials=('school', '
             yaw = side * math.pi / 2           # side 0 faces +z road
             for k in range(L):
                 if (side in (1, 3)) and k in (0, L - 1): continue  # corners already used
-                u = -inner / 2 + lot * (k + .5); v = inner / 2 - lot * .5
-                hx = bx + math.cos(yaw) * u + math.sin(yaw) * v; hz = bz - math.sin(yaw) * u + math.cos(yaw) * v
-                _house(mb, hx, hz, yaw, min(lot - 3, 22), T, rnd, lay, night)
+                u = -inner / 2 + lot * (k + .5); v = inner / 2          # front edge of the lot (next to the sidewalk)
+                ex = bx + math.cos(yaw) * u + math.sin(yaw) * v; ez = bz - math.sin(yaw) * u + math.cos(yaw) * v
+                _house(mb, ex, ez, yaw, min(lot - 3, 22), T, rnd, lay, night)
     mb.finish(time)
     _sky(time, T)
     return lay
 
-def _house(mb, x, z, yaw, w, T, rnd, lay, night):
+def _house(mb, ex, ez, yaw, w, T, rnd, lay, night):
     d = rnd.uniform(15, 19); h = rnd.choice([11, 12, 18, 20]); wall = rnd.choice(T['walls']); roof = rnd.choice(T['roofs'])
-    y0 = .3
+    y0 = .3; back = d / 2 + 8                                       # front yard is 8 deep, so trees/mailbox stay off the sidewalk
+    x, z = ex - math.sin(yaw) * back, ez - math.cos(yaw) * back
     mb.box(x, y0, z, w, h, d, wall, yaw)
     mb.gable(x, y0 + h, z, w + 1.6, rnd.uniform(5, 7), d + 1.6, roof, yaw + math.pi / 2)
     if T['snow']: mb.gable(x, y0 + h + .3, z, w + 1.7, 6.2, d + 1.7, 0xffffff, yaw + math.pi / 2)
@@ -158,9 +159,9 @@ def _house(mb, x, z, yaw, w, T, rnd, lay, night):
         for u in (-w / 3, w / 3):
             wx, wz = at(u, d / 2 + .05); mb.box(wx, y0 + 4 + f * 8, wz, 3.6, 3.2, .25, 0xffd98a, yaw, kind='win')
             wx, wz = at(u, -d / 2 - .05); mb.box(wx, y0 + 4 + f * 8, wz, 3.6, 3.2, .25, 0xffd98a, yaw, kind='win')
-    px, pz = at(0, d / 2 + 3); mb.box(px, y0, pz, 3.4, .2, 5, 0xbdb6aa, yaw)          # path to door
+    px, pz = at(0, d / 2 + 4); mb.box(px, y0, pz, 3.4, .2, 8, 0xbdb6aa, yaw)          # path to door
     mx, mz = at(w / 2 - 1, d / 2 + 6.5); mb.cyl(mx, y0, mz, .2, 3.4, 0x444444); mb.box(mx, y0 + 3.4, mz, 1.2, 1, 1.8, 0x3b5b8a, yaw)  # mailbox
-    tx, tz = at(-w / 2 + 1, d / 2 + 5); _tree(mb, tx, y0, tz, T, rnd)
+    tx, tz = at(-w / 2 + 2, d / 2 + 4); _tree(mb, tx, y0, tz, T, rnd)
     door = at(0, d / 2 + 2.5)
     lay['houses'].append(dict(id=len(lay['houses']), door=[round(door[0], 2), .3, round(door[1], 2)], faces_yaw=round(yaw, 4),
                               center=[round(x, 2), round(z, 2)], width=round(w, 1), depth=round(d, 1), height=h))

@@ -14,7 +14,7 @@ N = 144
 def h(scene, *x):
     t = (scene.frame_current - 1) / 24; k = t / 6
     p = kid.walk(pts, k, 1, .7); kid.setface('happy' if t < 3 else 'sneaky')
-    look(c, p.x - 14 + 4 * k, 7.5, p.z + 16, p.x + 3, 4.5, p.z, 44)
+    look(c, p.x - 12 + 4 * k, 7.0, p.z - 15, p.x + 3, 4.2, p.z + 1, 44)
 bpy.app.handlers.frame_change_pre.append(h)
 scene._render_settings(S, (800, 450), 4)
 S.frame_start, S.frame_end = 1, N; S.render.filepath = out + '/f_'
