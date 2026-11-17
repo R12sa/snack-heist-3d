@@ -22,8 +22,9 @@ def reset(G):
 
 def hold(obj, ch, arm='R', off=(0, -.1, -2.3), rot=None):
     bpy.context.view_layer.update()
-    a = ch.armR if arm == 'R' else ch.armL
-    obj.location = a.matrix_world @ Vector(off)
+    h = getattr(ch, 'handR' if arm == 'R' else 'handL', None)
+    if h is not None: obj.location = h.matrix_world @ Vector((0, off[1] - .1, -.15))
+    else: obj.location = (ch.armR if arm == 'R' else ch.armL).matrix_world @ Vector(off)
     if rot is not None: obj.rotation_euler = rot
 
 def chest(obj, ch, fwd=1.3, up=3.0):

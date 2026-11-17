@@ -151,6 +151,10 @@ class Char:
         bpy.context.view_layer.update(); f = s.head.matrix_world.to_3x3() @ Vector((0, -1, 0)); return math.atan2(f.x, -f.y)
 
 def make_cast():
+    import chars2
+    return chars2.make_cast2()
+
+def make_cast_old():
     kid = Char('kid', 0xf5cd30, 0x3b7bff, 0x2a4fb0, 0xf0f0f0, hair=0x5a3a1e, cap=0xff3b3b, stripe=0xffffff)
     dad = Char('dad', 0xe0ac7e, 0x2e8b57, 0x34343e, 0x222222, hair=0x2b1d14, scale=1.25)
     mom = Char('mom', 0xf1c27d, 0xa45bd6, 0x7a3fa8, 0x5a2a7a, hair=0x7a3b16, long=True, scale=1.18)
@@ -217,7 +221,8 @@ def make_props():
     return P
 
 def flashlight(ch):
-    f = empty(ch.name+'_flash', ch.armR, (0, -.35, -2.1)); f.rotation_mode = 'XYZ'
+    hand = getattr(ch, 'handR', None)
+    f = empty(ch.name+'_flash', hand or ch.armR, (0, -.15, -.05) if hand else (0, -.35, -2.1)); f.rotation_mode = 'XYZ'
     body = cylz(ch.name+'_flb', .25, 1.3, 0x222222, f, (0, 0, 0))
     lens = cylz(ch.name+'_fll', .28, .05, 0xfff6c8, f, (0, 0, -.66), emit=20)
     sp = bpy.data.lights.new(ch.name+'_spot', 'SPOT'); sp.energy = 0; sp.spot_size = math.radians(48); sp.spot_blend = .5; sp.color = srgb(0xfff1c0); sp.shadow_soft_size = .15
