@@ -4,3 +4,4 @@ work/
 __pycache__/
 assets/voice/*.onnx
 assets/voice/*.bin
+check_report.json

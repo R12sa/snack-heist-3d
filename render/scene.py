@@ -32,6 +32,8 @@ def build(res=(960, 540), spp=8):
         json.dump(TOWN, open(os.path.join(ROOT, 'assets', 'town_layout.json'), 'w'), indent=1)
     else:
         load_house()
+        import world
+        world.init(os.path.join(ROOT, 'assets', 'nav_house.json'))
     S = bpy.context.scene
     if not S.world: S.world = bpy.data.worlds.new('w')
     S.world.use_nodes = True

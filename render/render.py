@@ -9,7 +9,7 @@ argv = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
 ap = argparse.ArgumentParser()
 ap.add_argument('--chunk', type=int, default=0); ap.add_argument('--of', type=int, default=1)
 ap.add_argument('--out', default=os.path.join(ROOT, 'frames')); ap.add_argument('--spp', type=int, default=4)
-ap.add_argument('--width', type=int, default=800); ap.add_argument('--height', type=int, default=450)
+ap.add_argument('--width', type=int, default=1280); ap.add_argument('--height', type=int, default=720)
 ap.add_argument('--shots', default='all')
 a = ap.parse_args(argv)
 meta = json.load(open(os.path.join(ROOT, 'assets', 'voice', 'story.json')))

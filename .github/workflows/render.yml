@@ -7,7 +7,7 @@ on:
         description: "How many pieces to split the video into (GitHub runs 20 at a time; extra pieces balance slow computers)"
         default: "40"
       quality:
-        description: "fast (preview) or full"
+        description: "fast (640x360 test) or full (1280x720, sharp)"
         default: "full"
 
 jobs:

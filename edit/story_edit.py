@@ -1,7 +1,7 @@
 # Edit settings for the current story: Snack Heist gameplay showcase (Nights 1-3)
 EXTRA = {'end': .8}
 def config(L, S0):
-    Y = 140
+    Y = 165
     def done(t): return ("NIGHT %s COMPLETE" % t, "#7dff8a")
     CARDS = {
         'hook': [("GET BACK TO BED!", "#ffffff", .05, 9, 96, Y), ("0:10", "#ff4b4b", .05, 9, 130, 270)],
@@ -10,7 +10,7 @@ def config(L, S0):
         'n1jar': [(*done(1), 1.3, 9, 100, Y)],
         'n2cat': [("NIGHT 2", "#ffb35c", .05, 9, 130, Y)],
         'n2dad': [("MEOW!", "#ffb35c", .0, .7, 140, Y)],
-        'n2pass': [(*done(2), 1.2, 9, 100, Y)],
+        'n2pass': [("HE DIDN'T SEE YOU!", "#7dff8a", 1.2, 9, 100, Y)],
         'n3patrol': [("NIGHT 3", "#ff4b4b", .05, 9, 130, Y)],
         'n3stairs': [("0:05", "#ff4b4b", .0, 9, 150, Y)],
         'n3bed': [(*done(3), .25, 9, 110, Y), ("+ COINS", "#ffd34d", .5, 9, 80, 260)],
@@ -31,5 +31,9 @@ def config(L, S0):
            ("Steps1", S0('n3stairs'), 1.0), ("DoorOpen1", S0('n3bed') + .2, .9), ("Win1", S0('n3bed') + .3, .9), ("Click1", S0('perks'), .6),
            ("Click1", S0('perks') + .55, .6), ("Click1", S0('perks') + 1.1, .6), ("Click1", S0('perks') + 1.65, .6), ("Win1", S0('cta'), .6), ("Creak2", S0('end') + .3, .5)]
     duck = f"if(between(t\\,{S0('n2hide')}\\,{S0('perks')})\\,0.06\\,0.11)"
-    return dict(cards=CARDS, emph=EMPH, sfx=SFX, duck=duck, meow=[S0('n2dad') + .02], music_start=20,
+    # always-on label (shots, text, colour): tells the viewer which night it is and what the goal is
+    HUD = [(('n1parents', 'n1hall', 'n1jar'), None, "NIGHT 1   GOAL: COOKIE JAR", "#cfe0ff"),
+           (('n2cat', 'n2dad', 'n2hide', 'n2pass'), None, "NIGHT 2   GOAL: DON'T GET CAUGHT", "#ffb35c"),
+           (('n3patrol', 'n3throw', 'n3cake', 'n3stairs', 'n3bed'), None, "NIGHT 3   GOAL: BIRTHDAY CAKE", "#ff8a8a")]
+    return dict(hud=HUD, cards=CARDS, emph=EMPH, sfx=SFX, duck=duck, meow=[S0('n2dad') + .02], music_start=20,
                 grade={'title': "eq=saturation=1.1:contrast=1.05", 'hook': "eq=contrast=1.1:saturation=1.15"})

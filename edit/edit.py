@@ -31,6 +31,10 @@ for m in meta:
         fn = f"c_{n}{k}.txt"; open(fn, "w").write(txt)
         vf += (f",drawtext=fontfile={FONT}:textfile={fn}:fontcolor={col}:borderw={max(8, sz//11)}:bordercolor=black:shadowcolor=black@0.55:shadowy={sz//14}:"
                f"fontsize='{sz}*(1+0.28*max(0\\,1-(t-{a:.3f})/0.1))':x=(w-text_w)/2:y={y}-text_h/2:enable='between(t\\,{a:.3f}\\,{b:.3f})'")
+    for k, (txt, col) in enumerate([h[2:] for h in CFG.get('hud', []) if n in h[0:2][0]]):
+        fn = f"h_{n}{k}.txt"; open(fn, "w").write(txt)      # small always-on label: which night + the goal
+        vf += (f",drawtext=fontfile={FONT}:textfile={fn}:fontcolor={col}:fontsize=46:x=48:y=34:box=1:boxcolor=black@0.55:boxborderw=16:"
+               f"shadowcolor=black@0.6:shadowy=3")
     if n == meta[-1]['shot']: vf += f",fade=t=out:st={L[n]-.5:.3f}:d=0.5"
     run(["ffmpeg", "-v", "warning", "-y", "-framerate", str(FPS), "-start_number", "1", "-i", FR + n + "/f_%04d.jpg", "-vf", vf, "-frames:v", str(N),
          "-c:v", "libx264", "-crf", "12", "-preset", "ultrafast", "-pix_fmt", "yuv420p", "-r", str(FPS), f"s_{n}.tmp.mp4"])

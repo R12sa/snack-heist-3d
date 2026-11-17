@@ -24,7 +24,8 @@ def path(pts, k):
     return pts[-1].copy()
 def plen(pts): return sum((pts[i+1]-pts[i]).length for i in range(len(pts)-1))
 def pathDir(pts, k):
-    a, b = path(pts, clamp(k-.01)), path(pts, clamp(k+.01))
+    w = min(.06, 1.6 / max(plen(pts), 1e-3))           # look ~1.6 studs ahead/behind so corners turn smoothly
+    a, b = path(pts, clamp(k-w)), path(pts, clamp(k+w))
     if (b-a).length < 1e-6: a, b = path(pts, clamp(k-.03)), path(pts, clamp(k+.03))
     return math.atan2(b.x-a.x, b.z-a.z)
 

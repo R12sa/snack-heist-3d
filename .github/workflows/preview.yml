@@ -30,7 +30,7 @@ jobs:
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg > /dev/null
           mkdir out
-          ffmpeg -v error -i in/SnackHeist_Story.mp4 -vf scale=854:-2 -c:v libx264 -crf 30 -preset veryfast -c:a aac -b:a 96k out/preview.mp4
+          ffmpeg -v error -i in/SnackHeist_Story.mp4 -vf scale=1280:-2 -c:v libx264 -crf 23 -preset veryfast -c:a aac -b:a 128k out/preview.mp4
           ffmpeg -v error -i in/SnackHeist_Story.mp4 -vf "fps=2,scale=320:-2,tile=10x9" -frames:v 1 out/sheet.jpg
       - name: Push to previews branch
         run: |
