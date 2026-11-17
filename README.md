@@ -24,3 +24,21 @@ pip install bpy==5.3.0
 python render/render.py -- --out frames
 python edit/edit.py frames SnackHeist_Story.mp4
 ```
+
+## New towns (town maker)
+Stories can happen in your Snack Heist house **or** in a brand-new town built in under a second.
+
+Make `assets/place.json`:
+```
+{"place": "town", "seed": 7, "theme": "suburb", "time": "day", "size": 3}
+```
+- `seed`: any number. A new number gives a new town, and the same number gives the same town.
+- `theme`: `suburb`, `city`, `beach`, `snow`
+- `time`: `day`, `sunset`, `night`
+- `size`: blocks per side (3 = 9 blocks)
+
+No `place.json` (or `"place": "house"`) = your Snack Heist house.
+
+Every town has houses with doors facing the road, sidewalks, trees, streetlights, mailboxes, plus a school, gas station and shop. When a render runs, `assets/town_layout.json` is written with every door, road and intersection spot so shots know where to go.
+
+Quick look at a town: `python render/town_preview.py -- 7 suburb day town.jpg`
