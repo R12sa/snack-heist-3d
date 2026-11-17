@@ -118,3 +118,10 @@ def make_cast2():
     mom = Char2('mom', 0xf1c27d, 0xa45bd6, 0x5b3a8a, 0xe7e7ef, hair=0x7a3b16, long=True, scale=1.18, collar=0xff8ab8,
                 sole=0xff8ab8, hairstyle='long')
     return kid, dad, mom
+
+def make_friends():
+    """3 friends in pajamas for party-mode shots"""
+    a = Char2('f1', 0x8d5524, 0x2fb37a, 0x1f7a52, 0xf4f4f4, hair=0x1b1b1b, sole=0x2fb37a, stripe=0xffffff)
+    b = Char2('f2', 0xf1c27d, 0xff7aa8, 0xc4507c, 0xf4f4f4, hair=0xe0b34a, long=True, hairstyle='long', sole=0xff7aa8)
+    c = Char2('f3', 0xffdbac, 0xf2a33a, 0x3a5a9a, 0xf4f4f4, hair=0x7a3b16, cap=0x3a5a9a, sole=0xf2a33a)
+    return [a, b, c]

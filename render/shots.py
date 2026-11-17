@@ -10,8 +10,9 @@ DAD_TABLE = V(318.0, F1, 11.2)            # at the dining table, facing north (c
 KID_BED = (255.2, 19.7, -6.3)             # bottom bunk, feet
 
 def reset(G):
-    for c in (G['kid'], G['dad'], G['mom']):
+    for c in [G['kid'], G['dad'], G['mom']] + G.get('friends', []):
         if not c.hidden: c.hide(True)
+    if 'toy' in G['P']: G['P']['toy'].location = (0, 0, -500)
     G['dad'].flash_on(False); G['mom'].flash_on(False)
     G['cat'].root.location = (0, 0, -500)
     P = G['P']
@@ -282,3 +283,9 @@ def s_end(t, G, L):
 SHOTS = dict(hook=s_hook, bed=s_bed, jar=s_jar, out=s_out, hall=s_hall, parents=s_parents, stairs=s_stairs, cat=s_cat,
              catclose=s_catclose, plead=s_plead, dadwake=s_dadwake, grab=s_grab, hide=s_hide, dadin=s_dadin, cake=s_cake,
              eat=s_eat, turn=s_turn, stare=s_stare, dadsays=s_dadsays, deal=s_deal, split=s_split, mom=s_mom, end=s_end)
+
+try:
+    import shots_show
+    SHOTS.update(shots_show.SHOW)
+except ImportError:
+    pass

@@ -36,6 +36,7 @@ def build(res=(960, 540), spp=8):
     if not S.world: S.world = bpy.data.worlds.new('w')
     S.world.use_nodes = True
     kid, dad, mom = make_cast(); cat = Cat(); P = make_props()
+    import chars2; friends = chars2.make_friends()
     flashlight(dad); flashlight(mom)
     cam = camera()
     R = {}
@@ -43,7 +44,7 @@ def build(res=(960, 540), spp=8):
         lamp = point('lamp', 0, 0, -500, 0, 0xffc27a, .4); nl = point('nightlight', 0, 0, -500, 0, 0xffb060, .2); kf = point('kfill', 0, 0, -500, 0, 0xffffff, 2.0)
         P['jar'].location = (0, 0, -500); P['cake'].location = (0, 0, -500)
         _render_settings(S, res, spp)
-        return dict(S=S, kid=kid, dad=dad, mom=mom, cat=cat, P=P, cam=cam, R=R, R0={}, lamp=lamp, nl=nl, kfill=kf, TOWN=TOWN)
+        return dict(S=S, kid=kid, dad=dad, mom=mom, cat=cat, P=P, cam=cam, R=R, R0={}, lamp=lamp, nl=nl, kfill=kf, TOWN=TOWN, friends=friends)
     R['kidroom'] = area('A_kid', 272, 29.5, -14, 2200, 0x9fb4ff, 14, 272, 16, -14)
     R['hall2'] = area('A_hall2', 297, 29.5, -8, 1100, 0x9fb4ff, 8, 297, 16, -8)
     R['parents'] = area('A_par', 320, 29.5, -12, 1800, 0x9fb4ff, 12, 320, 16, -12)
@@ -58,7 +59,7 @@ def build(res=(960, 540), spp=8):
     sun.rotation_euler = (math.radians(55), 0, math.radians(200)); link(sun)
     bg = S.world.node_tree.nodes['Background']; bg.inputs[0].default_value = (.01, .015, .04, 1); bg.inputs[1].default_value = 1
     _render_settings(S, res, spp)
-    return dict(S=S, kid=kid, dad=dad, mom=mom, cat=cat, P=P, cam=cam, R=R, R0=G0, lamp=lamp, nl=nl, kfill=kf, TOWN=None)
+    return dict(S=S, kid=kid, dad=dad, mom=mom, cat=cat, P=P, cam=cam, R=R, R0=G0, lamp=lamp, nl=nl, kfill=kf, TOWN=None, friends=friends)
 
 def _render_settings(S, res, spp):
     # bake bevel modifiers into plain meshes so nothing is re-computed every frame

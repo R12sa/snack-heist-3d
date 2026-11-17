@@ -218,6 +218,11 @@ def make_props():
     P['cake'] = cake; P['flame'] = fl; P['cakeL'] = cl
     sl = empty('slice'); rbox('slice_m', .8, .9, .8, 0xffa0be, sl, (0, 0, 0), r=.08); rbox('slice_t', .82, .92, .2, 0xfff5fa, sl, (0, 0, .45), r=.06)
     P['slice'] = sl
+    toy = empty('toy')                               # rubber duck to throw
+    sph('duck_b', .55, 0xffd23a, toy, (0, 0, .45)); sph('duck_h', .36, 0xffd23a, toy, (0, -.35, 1.05))
+    bk = rbox('duck_beak', .3, .3, .12, 0xff8a1a, toy, (0, -.72, 1.0), r=.05)
+    sph('duck_e1', .06, 0x111111, toy, (.15, -.62, 1.15)); sph('duck_e2', .06, 0x111111, toy, (-.15, -.62, 1.15))
+    toy.location = (0, 0, -500); P['toy'] = toy
     return P
 
 def flashlight(ch):

@@ -13,7 +13,9 @@ ap.add_argument('--width', type=int, default=800); ap.add_argument('--height', t
 ap.add_argument('--shots', default='all')
 a = ap.parse_args(argv)
 meta = json.load(open(os.path.join(ROOT, 'assets', 'voice', 'story.json')))
-EXTRA = {'end': .9}
+sys.path.insert(0, os.path.join(ROOT, 'edit'))
+import story_edit
+EXTRA = story_edit.EXTRA
 jobs = []   # every frame in the video: (shot, frame, length)
 for m in meta:
     n = m['shot']
