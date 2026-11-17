@@ -1,0 +1,38 @@
+name: Save preview
+
+# After a render, saves a small preview video and a frame sheet to the "previews" branch (so the video can be checked without downloading).
+on:
+  workflow_run:
+    workflows: ["Render Snack Heist story"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: "Render run id"
+        required: true
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  preview:
+    runs-on: ubuntu-24.04
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: SnackHeist_Story
+          run-id: ${{ inputs.run_id || github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: in
+      - name: Make preview
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg > /dev/null
+          mkdir out
+          ffmpeg -v error -i in/SnackHeist_Story.mp4 -vf scale=854:-2 -c:v libx264 -crf 30 -preset veryfast -c:a aac -b:a 96k out/preview.mp4
+          ffmpeg -v error -i in/SnackHeist_Story.mp4 -vf "fps=2,scale=320:-2,tile=10x9" -frames:v 1 out/sheet.jpg
+      - name: Push to previews branch
+        run: |
+          cd out && git init -q -b previews && git config user.name "github-actions[bot]" && git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add . && git commit -qm "preview" && git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" previews
