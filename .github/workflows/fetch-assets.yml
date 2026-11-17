@@ -20,7 +20,9 @@ jobs:
         run: |
           mkdir -p assets/kits
           for k in ${{ inputs.kits }}; do
-            url=$(curl -sL "https://kenney.nl/assets/$k" | grep -oE 'https://kenney.nl/media/pages/assets/[^"]+\.zip' | head -1)
+            curl -sL -c /tmp/ck -b /tmp/ck "https://kenney.nl/assets/$k" -o /tmp/page.html
+            id=$(grep -oE 'data-download-id="[0-9a-f]+"' /tmp/page.html | head -1 | cut -d'"' -f2)
+            url=$(curl -sL -c /tmp/ck -b /tmp/ck -H "Referer: https://kenney.nl/assets/$k" "https://kenney.nl/download-link/$id" | python3 -c "import sys,json; print(json.load(sys.stdin).get('url',''))")
             echo "$k -> $url"
             [ -z "$url" ] && continue
             curl -sL "$url" -o /tmp/$k.zip
